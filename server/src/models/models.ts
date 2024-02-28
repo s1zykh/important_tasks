@@ -10,7 +10,13 @@ const Users = sequelize.define("Users", {
   },
   email: { type: DataTypes.STRING, unique: true },
   password: { type: DataTypes.STRING },
-  name: { type: DataTypes.STRING, unique: true, allowNull: false },
+  name: { type: DataTypes.STRING, unique: true, allowNull: true },
+  activationLink: { type: DataTypes.STRING, allowNull: true },
+  isActivated: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: true,
+  },
 });
 
 const Roles = sequelize.define("Roles", {
@@ -19,7 +25,7 @@ const Roles = sequelize.define("Roles", {
   description: { type: DataTypes.STRING, allowNull: false },
 });
 
-const Token = sequelize.define("Token", {
+const Tokens = sequelize.define("Tokens", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -54,7 +60,16 @@ const Priorities = sequelize.define("Priorities", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-// Roles.hasMany(UserRoles);
-// UserRoles.belongsTo(Roles);
+Users.hasOne(Tokens);
+Tokens.belongsTo(Users);
 
-export { Users, Roles, UserRoles, Projects, Tasks, Statuses, Priorities };
+export {
+  Users,
+  Roles,
+  UserRoles,
+  Projects,
+  Tasks,
+  Statuses,
+  Priorities,
+  Tokens,
+};

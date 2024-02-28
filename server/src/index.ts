@@ -15,7 +15,7 @@ app.use("/api", routerUser);
 async function start() {
   try {
     await sequelize.authenticate();
-    // await sequelize.sync();
+    await sequelize.sync(); //{ force: true }
     app.listen(PORT, () => {
       console.log("server");
     });
