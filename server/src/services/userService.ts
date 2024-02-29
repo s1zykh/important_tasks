@@ -7,6 +7,7 @@ import { Users } from "../models/models.js";
 import tokenService from "./tokenService.js";
 import UserDto from "../dtos/user-dto.js";
 import { IUserAttributes } from "../types/IUser.js";
+import ApiError from "../exceptions/apiError.js";
 
 dotenv.config();
 
@@ -17,7 +18,9 @@ class UserService {
     });
 
     if (candidate) {
-      throw new Error(`Пользователь с почтой ${email} уже существует`);
+      throw ApiError.BadRequest(
+        `Пользователь с почтой ${email} уже существует`
+      );
     }
 
     const hashPassword = await bcrypt.hash(password.toString(), 7);
@@ -43,7 +46,14 @@ class UserService {
   }
 
   async activate(activationLink: string) {
-    const user = await Users.findOne({ where: { activationLink } });
+    const user = (await Users.findOne({
+      where: { activationLink },
+    })) as unknown as IUserAttributes;
+    if (!user) {
+      throw ApiError.BadRequest("Неккоректная ссылка активации");
+    }
+    user.isActivated = true;
+    user.save();
   }
 }
 
