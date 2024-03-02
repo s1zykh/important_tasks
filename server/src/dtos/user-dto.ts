@@ -1,6 +1,6 @@
 import { IUserAttributes } from "../types/IUser.js";
 
-export default class UserDto {
+export default class UserDTO {
   email: string;
   id: number;
   isActivated: boolean;

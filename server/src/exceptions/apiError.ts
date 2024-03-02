@@ -8,8 +8,8 @@ class ApiError extends Error {
     this.errors = errors;
   }
 
-  static BadRequest(message: string): ApiError {
-    return new ApiError(400, "Некорректный запрос", [{ message }]);
+  static BadRequest(message: string, errors: unknown[] = []): ApiError {
+    return new ApiError(400, message, errors);
   }
 
   //    static BadValidation(errors: unknown[] = []): ApiError {
@@ -20,21 +20,21 @@ class ApiError extends Error {
     return new ApiError(401, "Пользователь не авторизован");
   }
 
-  static TokenExpiredError(): ApiError {
-    return new ApiError(401, "Срок действия токена истек");
-  }
+  // static TokenExpiredError(): ApiError {
+  //   return new ApiError(401, "Срок действия токена истек");
+  // }
 
-  static JsonWebTokenError(): ApiError {
-    return new ApiError(401, "Недействительный токен");
-  }
+  // static JsonWebTokenError(): ApiError {
+  //   return new ApiError(401, "Недействительный токен");
+  // }
 
-  static ForbiddenError(): ApiError {
-    return new ApiError(403, "Запрещенный");
-  }
+  // static ForbiddenError(): ApiError {
+  //   return new ApiError(403, "Запрещенный");
+  // }
 
-  public static InternalError(message: string, errors: unknown[]): ApiError {
-    return new ApiError(500, message, errors);
-  }
+  // static InternalError(message: string, errors: unknown[]): ApiError {
+  //   return new ApiError(500, message, errors);
+  // }
 }
 
 export default ApiError;

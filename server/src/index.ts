@@ -13,6 +13,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use("/api", routerUser);
 app.use(errorMiddleware);
+
 async function start() {
   try {
     await sequelize.authenticate();

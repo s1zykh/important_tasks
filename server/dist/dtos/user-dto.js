@@ -1,4 +1,4 @@
-export default class UserDto {
+export default class UserDTO {
     constructor(model) {
         this.email = model.email;
         this.id = model.id;
