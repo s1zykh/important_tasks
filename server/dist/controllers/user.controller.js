@@ -1,6 +1,8 @@
 import { validationResult } from "express-validator";
+import * as dotenv from "dotenv";
 import userService from "../services/userService.js";
 import ApiError from "../exceptions/apiError.js";
+dotenv.config();
 class userController {
     async registration(req, res, next) {
         try {
@@ -58,8 +60,8 @@ class userController {
     }
     async refresh(req, res, next) {
         try {
-            const { email, password } = req.cookies;
-            const userData = await userService.refresh(email, password);
+            const { refreshToken } = req.cookies;
+            const userData = await userService.refresh(refreshToken);
             res.cookie("refreshToken", userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,

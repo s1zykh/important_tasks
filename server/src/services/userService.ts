@@ -28,6 +28,7 @@ class UserService {
     const user = (await Users.create({
       email,
       password: hashPassword,
+      activationLink,
     })) as unknown as IUserAttributes;
 
     await mailService.sendActivationMail(

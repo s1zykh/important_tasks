@@ -20,6 +20,7 @@ class UserService {
         const user = (await Users.create({
             email,
             password: hashPassword,
+            activationLink,
         }));
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
         const userDto = new UserDTO(user);
